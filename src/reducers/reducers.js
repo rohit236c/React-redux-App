@@ -1,7 +1,8 @@
 import uuid from 'uuid'
+// return {...state, todos:{data:state.todos.data.map(d=>d.id===state.activeUser.id ? action.task : d), loading:false,error:false}}
 
 const initialState = {
-    todos : [],
+    todos : {data:[], loading:false, error:false},
     activeUser : '',
 
 }
@@ -17,34 +18,42 @@ const reducers = (state = initialState, action) => {
                
             }
             if(state.activeUser)
-            state.todos.forEach(item => {
+            state.todos.data.forEach(item => {
                 if(item.id===state.activeUser.id){
                     item.name = action.task.name;
+                    
                     return {
                         ...state,
-                        todos: state.todos
+                        todos:{data: state.todos.data}
                     }
                 }
             })
+
+
+            // let data = state.todos.data;
+            
+            
+
+            
             
             else{
                     return{
                         ...state,
-                        todos : state.todos.concat(newPerson)
+                       todos:{data : state.todos.data.concat(newPerson)}
                     }
 
-            }
+                }
             
         case 'Update':
             const newUser = {
                 id : action.id,
                 
             }
-            const User = state.todos.filter((todo)=>todo.id===newUser.id)
+            const User = state.todos.data.find((todo)=>todo.id===newUser.id)
             
             return{
                 ...state,
-                activeUser : User[0]               
+                activeUser : User              
             }   
         // case 'Edit' :
         //     const newUser = {

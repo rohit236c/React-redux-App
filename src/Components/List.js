@@ -14,6 +14,7 @@ export class List extends Component {
         const {todos} = this.props 
         
 
+        console.log("kfndsijfn")
         return (
             <ul className="ui list">
                 {
@@ -22,7 +23,6 @@ export class List extends Component {
                          handleUpdate = {this.handleUpdate}
                           title = {todo.name}
                           id = {todo.id}
-                         
                           key = {todo.id}
                       />
                   )

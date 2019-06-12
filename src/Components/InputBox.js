@@ -11,7 +11,7 @@ export class InputBox extends Component {
             person : [],
             activeUser:null,
             isEditable : true,
-            loading : false
+            
         
         }
       
@@ -44,17 +44,9 @@ export class InputBox extends Component {
    
    
     handleInput = () =>{
-        this.setState({
-            loading:true
-        })
         
-        setTimeout(
-        ()=>{
-            this.setState({
-                loading:false
-            })        
+        
         this.props.ADD(this.state.activeUser)
-        },1000)
 
        
 
@@ -109,7 +101,7 @@ export class InputBox extends Component {
 }
 export const mapStateToProps = (state) => {
     return {
-        todos: state.todos,
+        todos: state.todos.data,
         activeUser : state.activeUser   
     };
 }
