@@ -95,15 +95,14 @@ export class InputBox extends Component {
         if(this.state.loading){
             return <Loader/>
         }
-        
+
         return (
-            <div>
-                
-                <input type="text" placeholder="name" value={name} onChange={this.handleChange}/>
+            <div className="ui-grid">
+                <input className="ui input"type="text" placeholder="name" value={name} onChange={this.handleChange}/>
                 <br/>
                 {/* <input type="number" placeholder="age" value={age} onChange={this.handleChange}/> */}
                 <br/>
-                <button type="submit" onClick={this.handleInput}>submit</button>
+                <button className="ui primary button" type="submit" onClick={this.handleInput}>submit</button>
             </div>
         )
     }

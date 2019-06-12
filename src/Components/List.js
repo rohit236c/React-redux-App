@@ -15,7 +15,7 @@ export class List extends Component {
         
 
         return (
-            <ul>
+            <ul className="ui list">
                 {
                       todos.map((todo)=>
                       <ListItem 
