@@ -1,40 +1,67 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import Loader from './loader'
 
 
 export class InputBox extends Component {
     constructor(props) {
         super(props)
-        console.log(this.props)
+    
         this.state = {
-            activeUser:null
+            person : [],
+            activeUser:null,
+            isEditable : true,
+            loading : false
+        
         }
-
-        this.id = 0;
+      
+       
     }
 
     handleChange = (e)=>{
-       console.log(e.target.value)
         let activeUser = {};
-       if(this.state.activeUser){
-         activeUser = {...this.state.activeUser};
-         activeUser.name = e.target.value;
-       }else{
-        // let id = this.id;
-        activeUser['id'] = this.id;
-        activeUser.name = e.target.value
-       }
+       
+       
+                if(this.props.activeUser){
+                    activeUser = {...this.state.activeUser};
+                    activeUser.name = e.target.value;                  
+                   
+            }
+            else{
+                        activeUser.name = e.target.value                       
+            }
 
-       this.setState({
-        activeUser
-       })
+            this.setState({
+                activeUser : activeUser,              
+               
+            })
+            
     }
 
+  
+
+   
+   
+   
     handleInput = () =>{
-        console.log(this.props)
+        this.setState({
+            loading:true
+        })
+        
+        setTimeout(
+        ()=>{
+            this.setState({
+                loading:false
+            })        
+        this.props.ADD(this.state.activeUser)
+        },1000)
+
+       
+
     }
 
     componentDidUpdate(prevProps,prevState){
+       
         if(this.props.activeUser){
             if(this.props.activeUser.id !== this.state.activeUser.id){
                 this.setState({
@@ -44,18 +71,34 @@ export class InputBox extends Component {
         }
     }
 
+   
+    
+
     render() {
-        let {activeUser} = this.state;
+       
+        
+        
+        let activeUser = this.state.activeUser;
+       
         let name = '';
-
-        if(activeUser){
-            name = activeUser.name;
+        if(this.props.activeUser && this.state.isEditable){
+            activeUser = this.props.activeUser;
+            this.state.isEditable=false     
         }
-
-        console.log(activeUser)
-
+        if(activeUser){
+            // console.log('check');
+            name = activeUser.name;
+         
+        }
+       
+     
+        if(this.state.loading){
+            return <Loader/>
+        }
+        
         return (
             <div>
+                
                 <input type="text" placeholder="name" value={name} onChange={this.handleChange}/>
                 <br/>
                 {/* <input type="number" placeholder="age" value={age} onChange={this.handleChange}/> */}
@@ -66,12 +109,16 @@ export class InputBox extends Component {
     }
 }
 export const mapStateToProps = (state) => {
-    return {todos: state.todos};
+    return {
+        todos: state.todos,
+        activeUser : state.activeUser   
+    };
 }
 
 export const mapDispatchToProps = dispatch => {
     return {
-        ADD : (task)=>dispatch({type:'ADD',val:8}),
+        ADD : (task)=> dispatch({type:'ADD',task}),
+        Update : (id)=>dispatch({type:'Update',id})
     }
 
 }

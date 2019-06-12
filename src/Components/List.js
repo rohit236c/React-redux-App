@@ -5,22 +5,25 @@ import {mapStateToProps} from './InputBox'
 import {mapDispatchToProps} from './InputBox'
 
 export class List extends Component {
-    // constructor(props){
-    //     super(props)
-    //     // console.log(this.props)
-    // }
-
+   
+    handleUpdate = (id) =>{
+        console.log(id)
+        this.props.Update(id)
+    }
     render() {
         const {todos} = this.props 
+        
 
         return (
             <ul>
                 {
-                      todos.map((todo,id)=>
+                      todos.map((todo)=>
                       <ListItem 
+                         handleUpdate = {this.handleUpdate}
                           title = {todo.name}
-                          age = {todo.age}
-                          key = {id}
+                          id = {todo.id}
+                         
+                          key = {todo.id}
                       />
                   )
               
