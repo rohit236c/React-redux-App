@@ -6,21 +6,19 @@ import {mapDispatchToProps} from './InputBox'
 
 export class List extends Component {
    
-    handleUpdate = (id) =>{
-        console.log(id)
-        this.props.Update(id)
+    handleSelect = (id) =>{
+        
+        this.props.Select(id)
     }
+
     render() {
         const {todos} = this.props 
-        
-
-        console.log("kfndsijfn")
         return (
             <ul className="ui list">
                 {
                       todos.map((todo)=>
                       <ListItem 
-                         handleUpdate = {this.handleUpdate}
+                         handleSelect = {this.handleSelect}
                           title = {todo.name}
                           id = {todo.id}
                           key = {todo.id}

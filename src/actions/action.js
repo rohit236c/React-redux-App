@@ -1,9 +1,4 @@
-// const ADD = (text) => {
-//     return {type: 'Add Element', text}
-// }
-
-// const Delete = (taskId) => {
-//     return {type: 'delete',taskId}
-// }
-
-// export default {ADD,Delete}
+export const ADD = 'ADD';
+export const Select = 'Select';
+export const Edit = 'Edit';
+export const Clear ='Clear';

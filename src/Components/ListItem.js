@@ -5,7 +5,7 @@ export class ListItem extends Component {
     render() {
         
         return (
-            <li onClick = {()=>this.props.handleUpdate(this.props.id)}>{this.props.title}  </li>
+            <li onClick = { ()=>this.props.handleSelect(this.props.id) }>{ this.props.title }  </li>
         )
     }
 }

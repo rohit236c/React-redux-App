@@ -1,35 +1,34 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import Loader from './loader'
+// import Loader from './loader'
+import * as actionTypes from '../actions/action'
 
 
-export class InputBox extends Component {
+class InputBox extends Component {
     constructor(props) {
         super(props)
     
         this.state = {
-            person : [],
-            activeUser:null,
-            isEditable : true,
+            activeUser: null,
+            isEditable : true,      
             
-        
-        }
-      
-       
+        }       
+
     }
+
 
     handleChange = (e)=>{
         let activeUser = {};
-       
-       
-                if(this.props.activeUser){
+
+             if(this.props.activeUser){
+               
                     activeUser = {...this.state.activeUser};
-                    activeUser.name = e.target.value;                  
+                    activeUser.name = e.target.value;                                    
                    
-            }
-            else{
+                }
+                else {
                         activeUser.name = e.target.value                       
-            }
+                     }
 
             this.setState({
                 activeUser : activeUser,              
@@ -39,18 +38,26 @@ export class InputBox extends Component {
     }
 
   
+    
+handleInput = () =>{
+    console.log(this.state.CurrentActiveUser)
 
-   
-   
-   
-    handleInput = () =>{
-        
-        
-        this.props.ADD(this.state.activeUser)
+        if(this.props.activeUser){
+                   
+            this.props.Edit(this.state.activeUser)       
+            this.props.Clear()     
+        }
+        else{
+            console.log("addition")
+            this.props.ADD(this.state.activeUser)
+        }      
 
-       
-
+        //input box value null here..
+        this.setState({
+            activeUser:''
+        })
     }
+
 
     componentDidUpdate(prevProps,prevState){
        
@@ -67,26 +74,24 @@ export class InputBox extends Component {
     
 
     render() {
-       
-        
-        
+             
         let activeUser = this.state.activeUser;
        
         let name = '';
         if(this.props.activeUser && this.state.isEditable){
-            activeUser = this.props.activeUser;
-            this.state.isEditable=false     
+            activeUser = this.props.activeUser;  
+            this.setState({
+                isEditable : false
+            })   
         }
         if(activeUser){
-            // console.log('check');
-            name = activeUser.name;
-         
+            name = activeUser.name;         
         }
        
      
-        if(this.state.loading){
-            return <Loader/>
-        }
+        // if(this.state.loading){
+        //     return <Loader/>
+        // }
 
         return (
             <div className="ui-grid">
@@ -108,8 +113,10 @@ export const mapStateToProps = (state) => {
 
 export const mapDispatchToProps = dispatch => {
     return {
-        ADD : (task)=> dispatch({type:'ADD',task}),
-        Update : (id)=>dispatch({type:'Update',id})
+        ADD : (task)=> dispatch({type:actionTypes.ADD,task}),
+        Select : (id)=>dispatch({type:actionTypes.Select,id}),
+        Edit : (task)=>dispatch({type:actionTypes.Edit,task}),
+        Clear : ()=>dispatch ({type:actionTypes.Clear})
     }
 
 }
