@@ -16,6 +16,7 @@ const initialState = {
 const reducers = (state = initialState, action) => {
     
     switch(action.type){
+        
         case actionType.ADD:
             const newPerson = {
                 id : uuid(),
@@ -23,9 +24,11 @@ const reducers = (state = initialState, action) => {
             }
              return{
                         ...state,
-                       todos:{data : state.todos.data.concat(newPerson)}
+                    //    todos:{data : state.todos.data.concat(newPerson)}
+                       todos:{data:state.todos.data.concat(newPerson), loading:false,error:false}
                     }
-            
+        
+
 
         case actionType.Select:
             const newUser = {
@@ -52,7 +55,8 @@ const reducers = (state = initialState, action) => {
             // console.log(state.todos)
             return {
                 ...state,
-                todos:{data: person},     
+                todos:{data: person, loading:false,error:false},  
+                
                                
             }
             
@@ -61,10 +65,20 @@ const reducers = (state = initialState, action) => {
                 ...state,
                 activeUser: ''
             }
+    
+    
+    
+    case actionType.LoadingHandle :    
+           console.log("loader")
+            return{
+                ...state,
+                todos:{data:state.todos.data,loading:true,error:false}
+            }    
             
 
+    default:
+        return state ;
     }
-    return state ;
 
 }
 

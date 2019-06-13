@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-// import Loader from './loader'
+import Loader from './loader'
 import * as actionTypes from '../actions/action'
 
 
@@ -10,7 +10,8 @@ class InputBox extends Component {
     
         this.state = {
             activeUser: null,
-            isEditable : true,      
+            isEditable : true, 
+            isLoader : false     
             
         }       
 
@@ -40,23 +41,32 @@ class InputBox extends Component {
   
     
 handleInput = () =>{
-    console.log(this.state.CurrentActiveUser)
-
-        if(this.props.activeUser){
+    
+    // this.setState({
+    //     isLoader:true
+    // })
+    this.props.LoadingHandle()
+    
+    setTimeout(()=>{
+      if(this.props.activeUser){
                    
             this.props.Edit(this.state.activeUser)       
             this.props.Clear()     
+            // console.log(this.props.loading)
         }
         else{
             console.log("addition")
             this.props.ADD(this.state.activeUser)
+            console.log(this.props.loading)
         }      
 
         //input box value null here..
         this.setState({
-            activeUser:''
+            activeUser:'',          
         })
-    }
+    },1000)
+        
+}
 
 
     componentDidUpdate(prevProps,prevState){
@@ -89,9 +99,9 @@ handleInput = () =>{
         }
        
      
-        // if(this.state.loading){
-        //     return <Loader/>
-        // }
+        if( this.props.loading ){
+            return <Loader/>
+        }
 
         return (
             <div className="ui-grid">
@@ -105,18 +115,22 @@ handleInput = () =>{
     }
 }
 export const mapStateToProps = (state) => {
+    // console.log(state.todos.loading)
     return {
         todos: state.todos.data,
+        loading : state.todos.loading,
         activeUser : state.activeUser   
     };
 }
 
 export const mapDispatchToProps = dispatch => {
     return {
-        ADD : (task)=> dispatch({type:actionTypes.ADD,task}),
-        Select : (id)=>dispatch({type:actionTypes.Select,id}),
-        Edit : (task)=>dispatch({type:actionTypes.Edit,task}),
-        Clear : ()=>dispatch ({type:actionTypes.Clear})
+        ADD : (task)=> dispatch(actionTypes.Add(task)),             
+        
+        Select : (id)=>dispatch(actionTypes.SelectId(id)),
+        Edit   : (task)=>dispatch(actionTypes.EditItem(task)),
+        Clear  : ()=>dispatch (actionTypes.ClearBox()),
+        LoadingHandle : ()=>dispatch (actionTypes.LoadingHandled())
     }
 
 }
