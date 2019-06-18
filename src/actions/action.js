@@ -6,20 +6,27 @@ export const Edit = 'Edit';
 export const Clear ='Clear';
 export const LoadingHandle = 'LoadingHandle';
 
-const apiCall = (task)=>{
-    return new Promise((resolve,reject)=>{
-        setTimeout (()=>{
-            resolve (task)
-        },1000)
-    })
+// const apiCall = (task)=>{
+//     return new Promise((resolve,reject)=>{
+//         setTimeout (()=>{
+//             resolve (task)
+//         },1000)
+//     })
+// }
+
+//here we create an action//
+const AddList = (task) =>{
+    return {type:ADD,task}
 }
 
 
-export const Add = (task) =>{
-   
-       return {type:ADD,task}
-   
-    
+//here async task happens// 
+export const Add = (task) => {  
+    return dispatch => {    
+        setTimeout ( () => {
+            dispatch(AddList(task)) 
+        },1000)
+    }      
 }
       
 

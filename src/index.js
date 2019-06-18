@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import thunk from 'redux-thunk' ;
+// import thunk from 'redux-thunk' ;
 
 import App from './App';
 import {createStore,applyMiddleware,compose} from 'redux';
@@ -10,25 +10,38 @@ import reducers from './reducers/reducers';
 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+
+
+const thunkMiddleWare  = () =>{
+    
+    return({dispatch,getState,extraArguments})=>next=>action =>{
+        
+        if (typeof action === 'function') {
+            return action(dispatch, getState,extraArguments);
+          }
+      
+          return next(action)
+        
+    }
+}
 const logger  = () =>{
+   
     return next => {
         return action => {
-            console.log("action + " , action)
-            if(action.type ==='LoadingHandle'){
-                next(action)
-            }
-            setTimeout(() => {
-                next(action)    
-            }, 1000);
+           
+            next(action)
                  
         }
     }
 }
+// const thunk1 = thunkMiddleWare();
+// thunk1.withExtraArgument =  thunkMiddleWare;
 
 
 
 
-const store = createStore(reducers,composeEnhancers(applyMiddleware(logger,thunk)));
+const store = createStore(reducers,composeEnhancers(applyMiddleware(logger,thunkMiddleWare())));
 ReactDom.render(<Provider store={store}><App/></Provider>,document.getElementById('root'))
 
 

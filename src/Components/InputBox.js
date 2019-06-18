@@ -115,7 +115,6 @@ handleInput = () =>{
     }
 }
 export const mapStateToProps = (state) => {
-    // console.log(state.todos.loading)
     return {
         todos: state.todos.data,
         loading : state.todos.loading,
@@ -124,7 +123,6 @@ export const mapStateToProps = (state) => {
 }
 
 export const mapDispatchToProps = dispatch => {
-    // console.log( ADD : (task)=> dispatch(actionTypes.Add(task)))
     return {
 
         ADD : (task) => dispatch(actionTypes.Add(task)),      

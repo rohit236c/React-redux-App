@@ -24,7 +24,6 @@ const reducers = (state = initialState, action) => {
             }
              return{
                         ...state,
-                    //    todos:{data : state.todos.data.concat(newPerson)}
                        todos:{data:state.todos.data.concat(newPerson), loading:false,error:false}
                     }
         
