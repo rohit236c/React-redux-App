@@ -55,8 +55,7 @@ const reducers = (state = initialState, action) => {
             // console.log(state.todos)
             return {
                 ...state,
-                todos:{data: person, loading:false,error:false},  
-                
+                todos:{data: person, loading:false,error:false},                 
                                
             }
             

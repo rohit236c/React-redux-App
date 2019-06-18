@@ -47,7 +47,7 @@ handleInput = () =>{
     // })
     this.props.LoadingHandle()
     
-    setTimeout(()=>{
+   
       if(this.props.activeUser){
                    
             this.props.Edit(this.state.activeUser)       
@@ -55,16 +55,16 @@ handleInput = () =>{
             // console.log(this.props.loading)
         }
         else{
-            console.log("addition")
+            // console.log("addition")
             this.props.ADD(this.state.activeUser)
-            console.log(this.props.loading)
+            // console.log(this.props.loading)
         }      
 
         //input box value null here..
         this.setState({
             activeUser:'',          
         })
-    },1000)
+   
         
 }
 
@@ -124,13 +124,14 @@ export const mapStateToProps = (state) => {
 }
 
 export const mapDispatchToProps = dispatch => {
+    // console.log( ADD : (task)=> dispatch(actionTypes.Add(task)))
     return {
-        ADD : (task)=> dispatch(actionTypes.Add(task)),             
-        
-        Select : (id)=>dispatch(actionTypes.SelectId(id)),
-        Edit   : (task)=>dispatch(actionTypes.EditItem(task)),
-        Clear  : ()=>dispatch (actionTypes.ClearBox()),
-        LoadingHandle : ()=>dispatch (actionTypes.LoadingHandled())
+
+        ADD : (task) => dispatch(actionTypes.Add(task)),      
+        Select : (id) => dispatch(actionTypes.SelectId(id)),
+        Edit   : (task) => dispatch(actionTypes.EditItem(task)),
+        Clear  : () => dispatch (actionTypes.ClearBox()),
+        LoadingHandle : () => dispatch (actionTypes.LoadingHandled())
     }
 
 }
