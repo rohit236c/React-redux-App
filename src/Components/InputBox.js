@@ -42,10 +42,6 @@ class InputBox extends Component {
     
 handleInput = () =>{
     
-    // this.setState({
-    //     isLoader:true
-    // })
-    this.props.LoadingHandle()
     
    
       if(this.props.activeUser){

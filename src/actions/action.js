@@ -14,15 +14,21 @@ export const LoadingHandle = 'LoadingHandle';
 //     })
 // }
 
+
+
 //here we create an action//
 const AddList = (task) =>{
     return {type:ADD,task}
 }
 
 
-//here async task happens// 
+//here async task happens in here using redux-thunk // 
 export const Add = (task) => {  
-    return dispatch => {    
+    return (dispatch,getState) => {
+        //doing loading task here...//
+        dispatch(LoadingHandled())
+
+        //doing fetch async task here
         setTimeout ( () => {
             dispatch(AddList(task)) 
         },1000)

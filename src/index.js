@@ -6,6 +6,7 @@ import App from './App';
 import {createStore,applyMiddleware,compose} from 'redux';
 import {Provider} from 'react-redux';
 import reducers from './reducers/reducers';
+import thunk from 'redux-thunk';
 
 
 
@@ -13,18 +14,14 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 
 
-const thunkMiddleWare  = () =>{
-    
-    return({dispatch,getState,extraArguments})=>next=>action =>{
-        
-        if (typeof action === 'function') {
-            return action(dispatch, getState,extraArguments);
-          }
-      
-          return next(action)
-        
-    }
-}
+// const thunkMiddleWare  = () =>{    
+//     return({dispatch,getState,extraArguments})=>next=>action =>{        
+//         if (typeof action === 'function') {
+//             return action(dispatch, getState,extraArguments);
+//           }      
+//           return next(action);        
+//     }
+// }
 const logger  = () =>{
    
     return next => {
@@ -41,7 +38,7 @@ const logger  = () =>{
 
 
 
-const store = createStore(reducers,composeEnhancers(applyMiddleware(logger,thunkMiddleWare())));
+const store = createStore(reducers,composeEnhancers(applyMiddleware(logger,thunk)));
 ReactDom.render(<Provider store={store}><App/></Provider>,document.getElementById('root'))
 
 
